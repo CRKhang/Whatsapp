@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "241117876949",
+    "firebase_url": "https://whatapps-mess-default-rtdb.firebaseio.com",
+    "project_id": "whatapps-mess",
+    "storage_bucket": "whatapps-mess.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241117876949:android:9e332d8cd7e1f7d358885c",
+        "android_client_info": {
+          "package_name": "com.example.whatsapp_messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241117876949-qntqstlm3sg7h7vc33lcb1qs1h0hbief.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whatsapp_messenger",
+            "certificate_hash": "cdca51490e12edc347a53c5deae2eb0bc41bac42"
+          }
+        },
+        {
+          "client_id": "241117876949-fp8b7t5k2551706fpbgnkgom02nanpv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5-g4EH3CupBuWsFPp-V3e2Iu-F7rXCqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241117876949-fp8b7t5k2551706fpbgnkgom02nanpv0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "241117876949-ab2opdpvet99e6apvl5bp20kvbopluam.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsappMessenger"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241117876949:android:75c4c81ec19fe96d58885c",
+        "android_client_info": {
+          "package_name": "com.example.whatsapp_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241117876949-fp8b7t5k2551706fpbgnkgom02nanpv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5-g4EH3CupBuWsFPp-V3e2Iu-F7rXCqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241117876949-fp8b7t5k2551706fpbgnkgom02nanpv0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "241117876949-ab2opdpvet99e6apvl5bp20kvbopluam.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsappMessenger"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
