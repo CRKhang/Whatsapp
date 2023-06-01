@@ -10,6 +10,8 @@ import 'package:whatsapp_messenger/feature/contact/pages/contact_page.dart';
 import 'package:whatsapp_messenger/feature/home/pages/home_page.dart';
 import 'package:whatsapp_messenger/feature/welcome/pages/welcome_page.dart';
 
+import '../../feature/group/screens/create_group_screen.dart';
+
 class Routes {
   static const String welcome = 'welcome';
   static const String login = 'login';
@@ -65,6 +67,10 @@ class Routes {
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 800),
         );
+        case CreateGroupScreen.routesName:
+      return MaterialPageRoute(
+        builder: (context) => const CreateGroupScreen(),
+      );
       default:
         return MaterialPageRoute(
           builder: (context) {

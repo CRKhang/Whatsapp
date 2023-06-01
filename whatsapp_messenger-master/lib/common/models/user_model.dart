@@ -7,6 +7,8 @@ class UserModel {
   final String phoneNumber;
   final List<String> groupId;
 
+  var name;
+
   UserModel({
     required this.username,
     required this.uid,

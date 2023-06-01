@@ -1,3 +1,4 @@
+
 enum MessageType {
   text('text'),
   image('image'),

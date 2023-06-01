@@ -8,6 +8,8 @@ import 'package:whatsapp_messenger/feature/home/pages/call_home_page.dart';
 import 'package:whatsapp_messenger/feature/home/pages/chat_home_page.dart';
 import 'package:whatsapp_messenger/feature/home/pages/status_home_page.dart';
 
+import '../../group/screens/create_group_screen.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -51,7 +53,22 @@ class _HomePageState extends ConsumerState<HomePage> {
           elevation: 1,
           actions: [
             CustomIconButton(onPressed: () {}, icon: Icons.search),
-            CustomIconButton(onPressed: () {}, icon: Icons.more_vert),
+            PopupMenuButton(
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.grey,
+              ),
+              itemBuilder: ((context) => [
+              PopupMenuItem(
+                child: const Text(
+                  'Create Group',
+                  ),
+                  onTap: () => Future(
+                    () => Navigator.pushNamed(
+                        context, CreateGroupScreen.routesName),
+                  ),
+                  )
+            ]))
           ],
           bottom: const TabBar(
             indicatorWeight: 3,
