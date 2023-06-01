@@ -6,6 +6,8 @@ import 'package:whatsapp_messenger/common/models/message_model.dart';
 import 'package:whatsapp_messenger/feature/auth/controller/auth_controller.dart';
 import 'package:whatsapp_messenger/feature/chat/repository/chat_repository.dart';
 
+import '../../../common/models/group.dart';
+
 final chatControllerProvider = Provider((ref) {
   final chatRepository = ref.watch(chatRepositoryProvider);
   return ChatController(
@@ -44,6 +46,9 @@ class ChatController {
 
   Stream<List<LastMessageModel>> getAllLastMessageList() {
     return chatRepository.getAllLastMessageList();
+  }
+  Stream<List<Group>> chatGroups() {
+    return chatRepository.getChatGroups();
   }
 
   void sendTextMessage({

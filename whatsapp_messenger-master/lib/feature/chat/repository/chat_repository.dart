@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whatsapp_messenger/common/enum/message_type.dart';
 import 'package:whatsapp_messenger/common/helper/show_alert_dialog.dart';
+import 'package:whatsapp_messenger/common/models/group.dart';
 import 'package:whatsapp_messenger/common/models/last_message_model.dart';
 import 'package:whatsapp_messenger/common/models/message_model.dart';
 import 'package:whatsapp_messenger/common/models/user_model.dart';
@@ -82,6 +83,18 @@ class ChatRepository {
     } catch (e) {
       showAlertDialog(context: context, message: e.toString());
     }
+  }
+  Stream<List<Group>> getChatGroups() {
+    return firestore.collection('groups').snapshots().map((event) {
+      List<Group> groups = [];
+      for (var document in event.docs) {
+        var group = Group.fromMap(document.data());
+        if (group.membersUid.contains(auth.currentUser!.uid)) {
+          groups.add(group);
+        }
+      }
+      return groups;
+    });
   }
 
   Stream<List<MessageModel>> getAllOneToOneMessage(String receiverId) {

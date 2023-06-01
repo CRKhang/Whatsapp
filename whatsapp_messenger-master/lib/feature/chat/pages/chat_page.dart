@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_clippers/custom_clippers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
@@ -22,6 +23,8 @@ import '../../../common/helper/last_seen_message.dart';
 final pageStorageBucket = PageStorageBucket();
 
 class ChatPage extends ConsumerWidget {
+  static String routeName="/chat_page";
+
   ChatPage({super.key, required this.user});
 
   final UserModel user;
@@ -226,5 +229,10 @@ class ChatPage extends ConsumerWidget {
         ],
       ),
     );
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('routeName', routeName));
   }
 }
