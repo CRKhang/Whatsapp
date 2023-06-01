@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:whatsapp_messenger/common/enum/message_type.dart';
 import 'package:whatsapp_messenger/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_messenger/common/utils/coloors.dart';
@@ -10,10 +11,10 @@ import 'package:whatsapp_messenger/feature/chat/controller/chat_controller.dart'
 
 class ChatTextField extends ConsumerStatefulWidget {
   const ChatTextField({
-    super.key,
+    Key? key,
     required this.receiverId,
     required this.scrollController,
-  });
+  }) : super(key: key);
 
   final String receiverId;
   final ScrollController scrollController;
@@ -27,13 +28,15 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
 
   bool isMessageIconEnabled = false;
   double cardHeight = 0;
+  bool showEmojiPicker = false;
 
   void sendImageMessageFromGallery() async {
     final image = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const ImagePickerPage(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (_) => const ImagePickerPage(),
+      ),
+    );
 
     if (image != null) {
       sendFileMessage(image, MessageType.image);
@@ -43,13 +46,13 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
 
   void sendFileMessage(var file, MessageType messageType) async {
     ref.read(chatControllerProvider).sendFileMessage(
-          context,
-          file,
-          widget.receiverId,
-          messageType,
-        );
+      context,
+      file,
+      widget.receiverId,
+      messageType,
+    );
     await Future.delayed(const Duration(milliseconds: 500));
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       widget.scrollController.animateTo(
         widget.scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
@@ -60,16 +63,21 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
 
   void sendTextMessage() async {
     if (isMessageIconEnabled) {
+      String message = messageController.text;
+
+      // Xử lý emoji trong tin nhắn
+      message = handleEmojis(message);
+
       ref.read(chatControllerProvider).sendTextMessage(
-            context: context,
-            textMessage: messageController.text,
-            receiverId: widget.receiverId,
-          );
+        context: context,
+        textMessage: message,
+        receiverId: widget.receiverId,
+      );
       messageController.clear();
     }
 
     await Future.delayed(const Duration(milliseconds: 100));
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       widget.scrollController.animateTo(
         widget.scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
@@ -78,7 +86,7 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     });
   }
 
-  iconWithText({
+  Widget iconWithText({
     required VoidCallback onPressed,
     required IconData icon,
     required String text,
@@ -106,6 +114,19 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
         ),
       ],
     );
+  }
+
+  void toggleEmojiPicker() {
+    setState(() {
+      showEmojiPicker = !showEmojiPicker;
+    });
+  }
+
+  String handleEmojis(String message) {
+    // Hàm này xử lý các emoji trong tin nhắn(lưu ý chỗ này)
+    // Ví dụ: thay thế :) - thành 😊
+    message = message.replaceAll(':)', '😊');
+    return message;
   }
 
   @override
@@ -217,12 +238,11 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
                       ),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    prefixIcon: Material(
-                      color: Colors.transparent,
-                      child: CustomIconButton(
-                        onPressed: () {},
-                        icon: Icons.emoji_emotions_outlined,
-                        iconColor: Theme.of(context).listTileTheme.iconColor,
+                    prefixIcon: GestureDetector(
+                      onTap: toggleEmojiPicker,
+                      child: Icon(
+                        Icons.emoji_emotions_outlined,
+                        color: Theme.of(context).listTileTheme.iconColor,
                       ),
                     ),
                     suffixIcon: Row(
@@ -258,6 +278,17 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
             ],
           ),
         ),
+        if (showEmojiPicker)
+          Container(
+            height: 250,
+            child: EmojiPicker(
+              onEmojiSelected: (category, emoji) {
+                setState(() {
+                  messageController.text += emoji.emoji;
+                });
+              },
+            ),
+          ),
       ],
     );
   }
