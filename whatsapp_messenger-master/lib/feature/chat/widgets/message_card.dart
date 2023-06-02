@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:whatsapp_messenger/common/enum/message_type.dart' as my_type;
 import 'package:whatsapp_messenger/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_messenger/common/models/message_model.dart';
+import 'package:whatsapp_messenger/feature/chat/widgets/video_player_item.dart';
+
 
 class MessageCard extends StatelessWidget {
   const MessageCard({
@@ -65,6 +67,14 @@ class MessageCard extends StatelessWidget {
                           child: Image(
                             image: CachedNetworkImageProvider(message.textMessage),
                           ),
+                        ),
+                      )
+                      : message.type == my_type.MessageType.video
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 3, top: 3, left: 3),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: VideoPlayerItem(videoUrl: message.textMessage),
                         ),
                       )
                     : Padding(

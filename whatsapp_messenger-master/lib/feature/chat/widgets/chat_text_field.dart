@@ -7,6 +7,9 @@ import 'package:whatsapp_messenger/common/utils/coloors.dart';
 import 'package:whatsapp_messenger/common/widgets/custom_icon_button.dart';
 import 'package:whatsapp_messenger/feature/auth/pages/image_picker_page.dart';
 import 'package:whatsapp_messenger/feature/chat/controller/chat_controller.dart';
+import 'dart:io' as io;
+
+import '../../../common/utils/utils.dart';
 
 class ChatTextField extends ConsumerStatefulWidget {
   const ChatTextField({
@@ -56,6 +59,12 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
         curve: Curves.easeOut,
       );
     });
+  }
+  void selectVideo() async {
+    io.File? video = (await pickVideoFromGallery(context)) as io.File?;
+    if (video != null) {
+      sendFileMessage(video, MessageType.video);
+    }
   }
 
   void sendTextMessage() async {
@@ -142,9 +151,9 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       iconWithText(
-                        onPressed: () {},
+                        onPressed: selectVideo,
                         icon: Icons.book,
-                        text: 'File',
+                        text: 'Video',
                         background: const Color(0xFF7F66FE),
                       ),
                       iconWithText(
